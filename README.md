@@ -1,6 +1,14 @@
 # Binance Futures Testnet Trading Bot
 
-A clean and minimal Python trading bot for Binance Futures Testnet.
+A professional CLI-based trading bot for Binance Futures Testnet with Rich formatting, input validation, and robust fallback mechanisms.
+
+## Features
+
+- **CLI-based order execution** with Rich table formatting
+- **Input validation** for symbol, quantity, and price requirements
+- **Structured logging** with REQUEST/RESPONSE/MOCK RESPONSE tracking
+- **Fallback mechanism** for API failures with mock responses
+- **Optional Streamlit UI** for web-based interaction
 
 ## Setup
 
@@ -9,91 +17,74 @@ A clean and minimal Python trading bot for Binance Futures Testnet.
 pip install -r requirements.txt
 ```
 
-2. Set environment variables:
+2. Set up environment variables:
 ```bash
-export BINANCE_TESTNET_API_KEY="your_testnet_api_key"
-export BINANCE_TESTNET_SECRET_KEY="your_testnet_secret_key"
+cp .env.example .env
+# Edit .env with your Binance Testnet API credentials
 ```
 
 ## Usage (CLI)
 
-The CLI is the primary interface with enhanced Rich formatting for better user experience.
-
-### Market Orders
-
-**BUY Market Order:**
+### Market Order
 ```bash
 python cli.py --symbol BTCUSDT --side BUY --type MARKET --quantity 0.001
 ```
 
-**SELL Market Order:**
+### Limit Order
 ```bash
-python cli.py --symbol BTCUSDT --side SELL --type MARKET --quantity 0.001
-```
-
-### Limit Orders
-
-**BUY Limit Order:**
-```bash
-python cli.py --symbol BTCUSDT --side BUY --type LIMIT --quantity 0.001 --price 27000.00
-```
-
-**SELL Limit Order:**
-```bash
-python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.001 --price 28000.00
+python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.001 --price 70000
 ```
 
 **CLI Features:**
-- Rich table formatting for order summary and results
-- Color-coded status panels
-- User-friendly error messages
-- "Placing order..." progress indicator
-- Fallback notifications when API fails
+- Rich table formatting for order summaries and results
+- Color-coded status panels and progress indicators
+- Comprehensive error handling with clear messages
+- Professional output with no raw JSON dumps
 
 ## Optional UI
 
-For a web-based interface, run the Streamlit app:
-
+Launch the web interface:
 ```bash
 streamlit run app.py
 ```
 
 **UI Features:**
-- Interactive form with dropdown inputs
-- Real-time order summary display
-- JSON-formatted results
-- Status indicators and error handling
-- Same fallback logic as CLI
-- Environment setup guide
+- Interactive form with dropdown selections
+- Real-time order summary and response display
+- Same validation and fallback logic as CLI
+- Professional JSON-formatted results
 
-**Note:** The CLI remains the primary interface. The UI is an optional enhancement for users who prefer a graphical interface.
+## Fallback Mechanism
+
+Due to Binance Testnet access restrictions, the bot includes a robust fallback system:
+
+- **Primary**: Attempts real Binance API calls
+- **Fallback**: Generates mock responses when API fails
+- **Logging**: Clearly distinguishes between `RESPONSE:` and `MOCK RESPONSE:` in logs
+- **User Experience**: Seamless execution with clear status indicators
 
 ## Project Structure
 
 ```
-trading_bot/
+binance-testnet-trading-bot/
   bot/
     client.py        # Binance client wrapper
     orders.py        # Order placement logic
     validators.py    # Input validation
     logging_config.py # Logging configuration
   cli.py             # CLI entry point
+  app.py             # Streamlit UI (optional)
   requirements.txt   # Dependencies
+  .env.example      # Environment variables template
   README.md          # Documentation
 ```
 
-## Features
+## Requirements
 
-- Place BUY/SELL orders on Binance Futures Testnet
-- Support MARKET and LIMIT order types
-- Input validation for all parameters
-- Comprehensive logging to `bot.log`
-- Clear order summaries and responses
-- Error handling for API and network issues
+- Python 3.7+
+- Binance Testnet API credentials
+- Dependencies listed in `requirements.txt`
 
-## Notes
+## Logging
 
-- Uses Binance Futures Testnet (no real money)
-- Requires Binance Testnet API keys
-- Logs all API requests and responses
-- Validates all input parameters before placing orders
+All API requests, responses, and errors are logged to `bot.log` with timestamps for complete audit trails.

@@ -5,7 +5,6 @@ import sys
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
-from rich.text import Text
 from bot.orders import OrderManager
 from bot.validators import ValidationError, validate_symbol, validate_side, validate_order_type, validate_quantity, validate_price
 from bot.logging_config import logger
