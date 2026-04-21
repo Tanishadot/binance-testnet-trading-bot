@@ -2,10 +2,16 @@
 
 import argparse
 import sys
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.text import Text
 from bot.orders import OrderManager
 from bot.validators import ValidationError, validate_symbol, validate_side, validate_order_type, validate_quantity, validate_price
 from bot.logging_config import logger
 from binance.exceptions import BinanceAPIException
+
+console = Console()
 
 
 def create_parser():
@@ -40,6 +46,9 @@ def main():
         # Print order summary
         order_manager.print_order_summary(symbol, side, order_type, quantity, price)
         
+        # Show placing message
+        console.print(Panel("Placing order...", style="bold blue"))
+        
         # Place the order
         response = order_manager.place_order(symbol, side, order_type, quantity, price)
         
@@ -48,15 +57,15 @@ def main():
         
     except ValidationError as e:
         logger.error(f"VALIDATION ERROR: {str(e)}")
-        print(f"Validation Error: {str(e)}")
+        console.print(Panel(f"Validation Error: {str(e)}", style="bold red"))
         sys.exit(1)
     except BinanceAPIException as e:
         logger.error(f"BINANCE API ERROR [{e.code}]: {e.message}")
-        print(f"Binance API Error [{e.code}]: {e.message}")
+        console.print(Panel(f"Binance API Error [{e.code}]: {e.message}", style="bold red"))
         sys.exit(1)
     except Exception as e:
         logger.error(f"UNEXPECTED ERROR: {str(e)}")
-        print(f"Error: {str(e)}")
+        console.print(Panel(f"Error: {str(e)}", style="bold red"))
         sys.exit(1)
 
 

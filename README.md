@@ -15,7 +15,9 @@ export BINANCE_TESTNET_API_KEY="your_testnet_api_key"
 export BINANCE_TESTNET_SECRET_KEY="your_testnet_secret_key"
 ```
 
-## Usage
+## Usage (CLI)
+
+The CLI is the primary interface with enhanced Rich formatting for better user experience.
 
 ### Market Orders
 
@@ -40,6 +42,31 @@ python cli.py --symbol BTCUSDT --side BUY --type LIMIT --quantity 0.001 --price 
 ```bash
 python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.001 --price 28000.00
 ```
+
+**CLI Features:**
+- Rich table formatting for order summary and results
+- Color-coded status panels
+- User-friendly error messages
+- "Placing order..." progress indicator
+- Fallback notifications when API fails
+
+## Optional UI
+
+For a web-based interface, run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+**UI Features:**
+- Interactive form with dropdown inputs
+- Real-time order summary display
+- JSON-formatted results
+- Status indicators and error handling
+- Same fallback logic as CLI
+- Environment setup guide
+
+**Note:** The CLI remains the primary interface. The UI is an optional enhancement for users who prefer a graphical interface.
 
 ## Project Structure
 
